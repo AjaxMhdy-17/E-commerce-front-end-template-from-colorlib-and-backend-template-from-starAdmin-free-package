@@ -37,8 +37,14 @@ Route::group(['as' => 'user.'], function () {
 
 
     Route::get('', function () {
-        return view('front.layout.main');
+        return view('front.pages.home.home');
     })->name('home');
+
+
+    Route::get('contact', function () {
+        return view('front.pages.contact.index');
+    })->name('contact');
+
 
     Route::middleware('guest.authentic')->group(function () {
         Route::get('register', [FrontAuthController::class, 'register'])->name('register');

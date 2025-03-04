@@ -52,7 +52,7 @@ dashboard
                                                 @csrf
                                                 <button type="submit" style="background:transparent ; border : 0 ; outline : 0 ; width : 100% ; padding : 16px ">
 
-                                                    <div style="border: 0; padding : 0 ; color : #fff ; " class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Logout <i class="bx bx-log-out fs-5"></i></div>
+                                                    <div style="border: 0; padding : 0 ; color : #007bff ; cursor : pointer" class="list-group-item d-flex justify-content-between align-items-center bg-transparent">Logout <i class="bx bx-log-out fs-5"></i></div>
 
                                                 </button>
                                             </form>

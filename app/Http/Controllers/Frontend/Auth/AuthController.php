@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         Auth::guard('web')->login($user);
 
-        return response()->noContent();
+        return redirect()->route('user.dashboard')->with('success',"Registration Successfull!") ; 
     }
 
     public function login()
