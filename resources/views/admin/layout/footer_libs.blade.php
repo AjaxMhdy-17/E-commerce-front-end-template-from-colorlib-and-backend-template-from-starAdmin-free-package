@@ -13,9 +13,20 @@
 <script src="{{ asset('aset/assets/js/settings.js') }}"></script>
 <script src="{{ asset('aset/assets/js/hoverable-collapse.js') }}"></script>
 <script src="{{ asset('aset/assets/js/todolist.js') }}"></script>
+
+
+<script src="{{ asset('uset/assets/js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('uset/assets/js/dataTables.bootstrap4.js') }}"></script>
+
+
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="{{ asset('aset/assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
 <script src="{{ asset('aset/assets/js/dashboard.js') }}"></script>
 <!-- <script src="{{ asset('aset/assets/js/Chart.roundedBarCharts.js') }}"></script> -->
 <!-- End custom js for this page-->
+
+@stack('js-lib')
+
+@stack('script')
+

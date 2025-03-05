@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,8 +23,14 @@
     <link rel="stylesheet" href="{{ asset('aset/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('aset/assets/js/select.dataTables.min.css') }}">
     <!-- End plugin css for this page -->
+
+    @stack('css-lib')
+
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('aset/assets/css/style.css') }}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href=" {{ asset('aset/assets/images/favicon.png') }}" />
+
+    @stack('style')
+
 </head>

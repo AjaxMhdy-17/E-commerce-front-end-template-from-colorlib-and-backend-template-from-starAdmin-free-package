@@ -2,18 +2,12 @@
 
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Auth\AuthController;
+use App\Http\Controllers\Backend\Product\ProductCategoryController;
+use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Frontend\Account\UserDashboardController;
 use App\Http\Controllers\Frontend\Auth\AuthController as FrontAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
-Route::get('docs', function () {
-    return view('dynPages.docs');
-});
-
-
-
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -27,7 +21,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::middleware('admin')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard')->middleware('admin');
+        Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
+        Route::resource('category', ProductCategoryController::class);
+
+        Route::resource('sub-category', ProductSubCategoryController::class);
+
     });
 });
 
@@ -60,12 +58,3 @@ Route::group(['as' => 'user.'], function () {
         Route::get('dashboard', [UserDashboardController::class, 'dashboard'])->name('dashboard');
     });
 });
-
-
-
-
-
-
-
-
-/// automated routes 

@@ -23,7 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('uset/assets/styles/responsive.css')}}">
 
 	<style>
-	
+
 	</style>
 
 
@@ -72,8 +72,21 @@
 								</div>
 								<div class="top_bar_user">
 									<div class="user_icon"><img src="images/user.svg" alt=""></div>
+
+
+									@guest('web')
 									<div><a href="{{route('user.register')}}">Register</a></div>
 									<div><a href="{{route('user.login')}}">Sign in</a></div>
+									@endguest
+
+									@auth('web')
+									<div><a href="{{route('user.dashboard')}}">Dashboard</a></div>
+									<div><a href="javascript:;" onclick="document.getElementById('logout-form').submit();">Logout</a></div>
+									<form id="logout-form" action="{{ route('user.logout') }}" method="post">
+										@csrf
+									</form>
+									@endauth('web')
+
 								</div>
 							</div>
 						</div>
