@@ -17,15 +17,15 @@
                         title={{$title}}
                      />
 
-                    <form class="forms-sample material-form">
-                        <div class="form-group">
-                            <input type="text" required="required">
-                            <label for="input" class="control-label">Category Name</label><i class="bar"></i>
-                        </div>
+                    <form action="{{route('admin.product.category.update',['category' => $category->id])}}" class="forms-sample material-form" method="post">
+                        @csrf
+                        @method('put') 
+                        @include('admin.pages.product.category.form')
                         <div class="button-container">
-                            <button type="button" class="button btn btn-primary"><span>Submit</span></button>
+                            <button type="submit" class="button btn btn-primary"><span>Submit</span></button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

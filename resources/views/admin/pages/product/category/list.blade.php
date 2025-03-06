@@ -10,9 +10,9 @@
 <div class="content-wrapper">
     <div class="card">
         <div class="card-body">
-            
+
             <x-card-title title="category list" button="<a  class='btn btn-info' href='{{route('admin.product.category.create')}}'>+ Add Category</a>" />
-            
+
 
             <div class="row">
                 <div class="col-12">
@@ -40,12 +40,17 @@
 @push('css-lib')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css">
+
 @endpush
 
 @push('style')
 <style>
     .dt-length label {
-        margin-left: 5px  !important;
+        margin-left: 5px !important;
     }
 
     thead tr th {
@@ -70,21 +75,22 @@
     }
 
     .dropdown .dropdown-menu {
-        margin-top: -20px;
+        top: 20px;
+        right: 30px;
         font-size: 0.812rem;
         box-shadow: 0px 1px 15px 1px rgba(230, 234, 236, 0.35);
-        margin-left: -40px;
     }
 
-    .dropdown.text-right .action-dropdown-btn{
-        padding: 5px ;
+    .dropdown.text-right .action-dropdown-btn {
+        padding: 5px;
     }
 
-    .dt-paging{
+    .dt-paging {
         background: #c4c8cb;
-        border-radius: 10px ;
+        border-radius: 10px;
     }
 
+    /* .dropdown-menu */
 </style>
 @endpush
 
@@ -93,9 +99,14 @@
 <script src="{{ asset('aset/assets/js/jquery.js') }}"></script>
 <script src="{{ asset('aset/assets/js/dataTables.js') }}"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+
 @endpush
 
 @push('script')
+
+
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -139,5 +150,31 @@
 
     });
 </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('click', '.show-alert-delete-box', function(event) {
+            event.preventDefault(); 
+
+            var form = $(this).closest("form");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you really want to delete this category?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+</script>
+
 
 @endpush

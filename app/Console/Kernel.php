@@ -9,11 +9,7 @@ class Kernel extends ConsoleKernel
 {
 
 
-    protected $commands = [
-        \App\Console\Commands\LoadAssets::class,
-        \App\Console\Commands\FixForm::class,
-
-    ];
+    protected $commands = [];
 
 
     /**

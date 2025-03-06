@@ -1,5 +1,6 @@
 @include('admin.layout.head_libs')
 
+@include('sweetalert::alert')
 
 <body class="with-welcome-text">
     <div class="container-scroller">
