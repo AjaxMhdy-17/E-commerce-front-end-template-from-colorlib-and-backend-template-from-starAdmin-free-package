@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-body">
             
-            <x-card-title title="category list" button="<a  class='btn btn-info' href='{{route('admin.product.sub-category.index')}}'>+ Add Product</a>" />
+            <x-card-title title="category list" button="<a  class='btn btn-info' href='{{route('admin.product.category.create')}}'>+ Add Category</a>" />
             
 
             <div class="row">

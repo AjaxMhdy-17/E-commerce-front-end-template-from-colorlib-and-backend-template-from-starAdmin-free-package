@@ -33,4 +33,10 @@
 
     @stack('style')
 
+    <style>
+        .error_message{
+            color : red ; 
+        }
+    </style>
+
 </head>

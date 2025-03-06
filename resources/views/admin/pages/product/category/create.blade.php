@@ -12,14 +12,13 @@
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-
                     <x-card-title
                         title={{$title}} />
-
-                    <form class="forms-sample material-form">
+                    <form action="{{route('admin.product.category.store')}}" class="forms-sample material-form" method="post">
+                        @csrf
                         @include('admin.pages.product.category.form')
                         <div class="button-container">
-                            <button type="button" class="button btn btn-primary"><span>Submit</span></button>
+                            <button type="submit" class="button btn btn-primary"><span>Submit</span></button>
                         </div>
                     </form>
                 </div>

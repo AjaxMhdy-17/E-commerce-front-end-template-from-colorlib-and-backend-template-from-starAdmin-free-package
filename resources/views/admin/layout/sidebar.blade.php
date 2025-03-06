@@ -32,7 +32,7 @@
             <div class="collapse {{ request()->routeIs('admin.product.*') ? 'show' : '' }}" id="form-elements">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.product.category.index') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('admin.product.category.*') ? 'active' : '' }}"
                             href="{{ route('admin.product.category.index') }}">
                             Category
                         </a>
