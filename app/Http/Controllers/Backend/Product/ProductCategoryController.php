@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
     {
         $data['title'] = "Category List";
         if ($request->ajax()) {
-            $admins = Admin::query();
+            $admins = Category::query();
             return DataTables::eloquent($admins)
                 ->addIndexColumn()
                 ->addColumn('created_at', function ($admin) {

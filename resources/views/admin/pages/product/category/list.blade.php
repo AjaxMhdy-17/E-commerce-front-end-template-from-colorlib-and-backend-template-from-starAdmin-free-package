@@ -21,7 +21,6 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-end">Action</th>
                                 </tr>
@@ -109,11 +108,6 @@
             columns: [{
                     data: 'name',
                     name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email',
-                    className: "text-center"
                 },
                 {
                     data: 'created_at',
