@@ -141,7 +141,7 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: '{{ route("admin.category.index") }}'
+                url: '{{ route("admin.product.category.index") }}'
             },
             columns: [{
                     data: 'name',

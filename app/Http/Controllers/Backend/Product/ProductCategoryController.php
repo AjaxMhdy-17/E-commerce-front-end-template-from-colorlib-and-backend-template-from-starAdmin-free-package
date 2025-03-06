@@ -27,10 +27,18 @@ class ProductCategoryController extends Controller
                     return Carbon::parse($admin->created_at)->format('Y-m-d');
                 })
                 ->addColumn('action', function ($admin) {
-                    return "
-                    action
-
-                    ";
+                    return '
+                         <div class="dropdown text-right">
+                            <button type="button" class="btn btn-info action-dropdown-btn">
+                                <i class="ti-time"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Edit</a>
+                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    ';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

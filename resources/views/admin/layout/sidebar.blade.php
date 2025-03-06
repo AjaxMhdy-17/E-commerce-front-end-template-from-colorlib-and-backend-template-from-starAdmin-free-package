@@ -9,7 +9,7 @@
         </li>
 
         <li class="nav-item">
-        <!-- <li class="nav-item {{ request()->routeIs('admin.widget') ? 'active' : '' }}"> -->
+            <!-- <li class="nav-item {{ request()->routeIs('admin.widget') ? 'active' : '' }}"> -->
             <a class="nav-link">
                 <i class="mdi mdi-tune menu-icon"></i>
                 <span class="menu-title">Widget</span>
@@ -19,20 +19,38 @@
 
 
         <li class="nav-item nav-category">Product</li>
+
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements"
+                aria-expanded="{{ request()->routeIs('admin.product.*') ? 'true' : 'false' }}"
+                aria-controls="form-elements">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Product</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="form-elements">
+
+            <div class="collapse {{ request()->routeIs('admin.product.*') ? 'show' : '' }}" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link active" href="{{route('admin.category.index')}}">Category</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.sub-category.index') }}">Sub Category</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Elements</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.category.index') ? 'active' : '' }}"
+                            href="{{ route('admin.product.category.index') }}">
+                            Category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.sub-category.index') ? 'active' : '' }}"
+                            href="{{ route('admin.product.sub-category.index') }}">
+                            Sub Category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/forms/basic_elements.html">Elements</a>
+                    </li>
                 </ul>
             </div>
         </li>
+
+
 
         <li class="nav-item nav-category">Site Settings</li>
         <li class="nav-item">

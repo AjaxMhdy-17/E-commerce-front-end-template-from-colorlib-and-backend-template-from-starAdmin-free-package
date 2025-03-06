@@ -22,10 +22,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::middleware('admin')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-        Route::resource('category', ProductCategoryController::class);
 
-        Route::resource('sub-category', ProductSubCategoryController::class);
-
+        Route::group(['prefix' => 'product', 'as' => 'product.'] , function () {
+            Route::resource('category', ProductCategoryController::class);
+            Route::resource('sub-category', ProductSubCategoryController::class);
+        });
     });
 });
 
