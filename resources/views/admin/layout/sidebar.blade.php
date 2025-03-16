@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.product.sub-category.index') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('admin.product.sub-category.*') ? 'active' : '' }}"
                             href="{{ route('admin.product.sub-category.index') }}">
                             Sub Category
                         </a>

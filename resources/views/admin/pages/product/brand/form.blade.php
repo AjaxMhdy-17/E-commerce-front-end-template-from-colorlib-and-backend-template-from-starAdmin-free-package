@@ -52,7 +52,6 @@
 
 @push('script')
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('brand_img');

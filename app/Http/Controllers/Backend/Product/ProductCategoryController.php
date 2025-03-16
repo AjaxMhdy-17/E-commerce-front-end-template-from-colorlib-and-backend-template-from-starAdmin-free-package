@@ -11,6 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProductCategoryController extends Controller
 {
+
     public function index(Request $request)
     {
         $data['title'] = "Category List";
