@@ -29,11 +29,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // event(new Registered($user));
+        Auth::guard('admin')->login($user);
 
-        // Auth::login($user);
-
-        return response()->noContent();
+        return redirect()->route('admin.dashboard')->with('success','Registion in successfully!');
     }
 
     public function login()

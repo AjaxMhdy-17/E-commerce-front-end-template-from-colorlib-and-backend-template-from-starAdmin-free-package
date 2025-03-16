@@ -43,6 +43,14 @@
                             Sub Category
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.brand.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.brand.index') }}">
+                            Brand
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="pages/forms/basic_elements.html">Elements</a>
                     </li>

@@ -15,22 +15,19 @@
                     <x-card-title
                         title={{$title}}
                      />
-                    <form action="{{route('admin.product.category.update',['category' => $category->id])}}" class="forms-sample material-form" method="post">
+                    <form action="{{route('admin.product.brand.update',['brand' => $brand->id])}}" class="forms-sample material-form" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put') 
-                        @include('admin.pages.product.category.form')
+                        @include('admin.pages.product.brand.form')
                         <div class="button-container">
                             <button type="submit" class="button btn btn-primary"><span>Submit</span></button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 @endsection

@@ -10,14 +10,15 @@
 <div class="content-wrapper">
     <div class="card">
         <div class="card-body">
-            <x-card-title title="category list" button="<a  class='btn btn-info' href='{{route('admin.product.category.create')}}'>+ Add Category</a>" />
+            <x-card-title title="brand list" button="<a  class='btn btn-info' href='{{route('admin.product.brand.create')}}'>+ Add Brand</a>" />
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
                         <table class="table table-striped datatable">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>brand_name</th>
+                                    <th>brand_image</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-end">Action</th>
                                 </tr>
@@ -86,6 +87,16 @@
         border-radius: 10px;
     }
 
+    .action-dropdown-btn{
+        padding: 5px;
+    }
+
+    .table td img {
+        height: 50px ;
+        width : 80px ;
+        border-radius: 3px ;
+    }
+
     /* .dropdown-menu */
 </style>
 @endpush
@@ -106,15 +117,23 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
         const table = $('.datatable').DataTable({
             serverSide: true,
             processing: true,
             ajax: {
-                url: '{{ route("admin.product.category.index") }}'
+                url: '{{ route("admin.product.brand.index") }}'
             },
             columns: [{
-                    data: 'name',
-                    name: 'name'
+                    data: 'brand_name',
+                    name: 'brand_name'
+                },
+                {
+                    data: 'brand_img',
+                    name: 'brand_img',
+                    orderable: false,
+                    searchable: false,
+                    className: "text-center"
                 },
                 {
                     data: 'created_at',
@@ -125,10 +144,12 @@
                     data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    className: "text-end"
                 }
             ]
         });
+
 
 
         $('body').on('click', '.action-dropdown-btn', function() {
@@ -151,7 +172,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('click', '.show-alert-delete-box', function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             var form = $(this).closest("form");
             Swal.fire({
                 title: "Are you sure?",
@@ -163,7 +184,7 @@
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit(); 
+                    form.submit();
                 }
             });
         });
