@@ -15,8 +15,9 @@ class ProductCategoryController extends Controller
     public function index(Request $request)
     {
         $data['title'] = "Category List";
+        
         if ($request->ajax()) {
-            $categories = Category::query();
+            $categories = Category::orderBy('created_at', 'desc');
             return DataTables::eloquent($categories)
                 ->addIndexColumn()
                 ->addColumn('created_at', function ($category) {
@@ -97,7 +98,7 @@ class ProductCategoryController extends Controller
             $category = Category::findOrFail($id);
             $done = $category->delete();
             throw_if_fail(!$done, "Product Category Can't be Deleted!");
-            return back()->with('success' , "Product Category Deleted Successfully!") ; 
+            return back()->with('success', "Product Category Deleted Successfully!");
         });
     }
 

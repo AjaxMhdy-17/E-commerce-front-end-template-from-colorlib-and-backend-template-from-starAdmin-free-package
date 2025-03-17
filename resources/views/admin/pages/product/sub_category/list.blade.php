@@ -17,8 +17,8 @@
                         <table class="table table-striped datatable">
                             <thead>
                                 <tr>
-                                    <th>brand_name</th>
-                                    <th>brand_image</th>
+                                    <th>Sub Category Name</th>
+                                    <th>Category Name</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-end">Action</th>
                                 </tr>
@@ -122,17 +122,15 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: '{{ route("admin.product.brand.index") }}'
+                url: '{{ route("admin.product.sub-category.index") }}'
             },
             columns: [{
-                    data: 'brand_name',
-                    name: 'brand_name'
+                    data: 'subCategory_name',
+                    name: 'subCategory_name',
                 },
                 {
-                    data: 'brand_img',
-                    name: 'brand_img',
-                    orderable: false,
-                    searchable: false,
+                    data: 'category_name',
+                    name: 'category_name',
                     className: "text-center"
                 },
                 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\BrandName;
-use App\Models\Category;
+use App\Services\ErrorHandlerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +18,8 @@ class ProductBandController extends Controller
         $data['title'] = "Brand List";
 
         if ($request->ajax()) {
-            $brands = BrandName::query();
 
+            $brands = BrandName::orderBy('created_at', 'desc');
             return DataTables::eloquent($brands)
                 ->addIndexColumn()
                 ->addColumn('brand_img', function ($brand) {
@@ -55,7 +55,6 @@ class ProductBandController extends Controller
                 ->rawColumns(['brand_img', 'action'])
                 ->make(true);
         }
-
         return view('admin.pages.product.brand.list', $data);
     }
 
@@ -70,19 +69,22 @@ class ProductBandController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->validateBrandSubmition($request);
-        unset($data['existing_brand_img']);
-        if (isset($data['brand_img']) && $data['brand_img']) {
-            $image_name = date('dmy_H_s_i');
-            $ext = strtolower($data['brand_img']->getClientOriginalExtension());
-            $image_full_name = $image_name . "." . $ext;
-            $upload_path = 'public/media/brand/';
-            $image_url = $upload_path . $image_full_name;
-            $success = $data['brand_img']->move($upload_path, $image_full_name);
-            $data['brand_img'] = $image_url;
-        }
-        DB::table('brand_names')->insert($data);
-        return back()->with('success', 'Product Brand Added Successfully!');
+
+        return ErrorHandlerService::handle(function () use ($request) {
+            $data = $this->validateBrandSubmition($request);
+            unset($data['existing_brand_img']);
+            if (isset($data['brand_img']) && $data['brand_img']) {
+                $image_name = date('dmy_H_s_i');
+                $ext = strtolower($data['brand_img']->getClientOriginalExtension());
+                $image_full_name = $image_name . "." . $ext;
+                $upload_path = 'public/media/brand/';
+                $image_url = $upload_path . $image_full_name;
+                $success = $data['brand_img']->move($upload_path, $image_full_name);
+                $data['brand_img'] = $image_url;
+            }
+            DB::table('brand_names')->insert($data);
+            return redirect()->route('admin.product.brand.index')->with('success', 'Product Brand Added Successfully!');
+        });
     }
 
 
@@ -90,47 +92,50 @@ class ProductBandController extends Controller
     {
         $data['title'] = "Brand Edit";
         $data['brand'] = BrandName::findOrFail($id);
-
         return view('admin.pages.product.brand.edit', $data);
     }
 
 
     public function update(Request $request, string $id)
     {
-        $data = $this->validateBrandSubmition($request);
-        $brand = BrandName::findOrFail($id);
-        $old_img = $brand->brand_img;
-        if (isset($data['brand_img']) && $data['brand_img']) {
-            if ($old_img != null) {
-                unlink($old_img);
+        return ErrorHandlerService::handle(function () use ($request, $id) {
+            $data = $this->validateBrandSubmition($request);
+            $brand = BrandName::findOrFail($id);
+            $old_img = $brand->brand_img;
+            if (isset($data['brand_img']) && $data['brand_img']) {
+                if ($old_img != null) {
+                    unlink($old_img);
+                }
+                unset($data['existing_brand_img']);
+                $image_name = date('dmy_H_s_i');
+                $ext = strtolower($data['brand_img']->getClientOriginalExtension());
+                $image_full_name = $image_name . "." . $ext;
+                $upload_path = 'public/media/brand/';
+                $image_url = $upload_path . $image_full_name;
+                $success = $data['brand_img']->move($upload_path, $image_full_name);
+                DB::table('brand_names')->where('id', $id)->update([
+                    'brand_name' => $data['brand_name'],
+                    'brand_img' => $image_url
+                ]);
+                return redirect()->route('admin.product.brand.index')->with('success', 'Product Brand Updated Successfully!');
             }
-            unset($data['existing_brand_img']);
-            $image_name = date('dmy_H_s_i');
-            $ext = strtolower($data['brand_img']->getClientOriginalExtension());
-            $image_full_name = $image_name . "." . $ext;
-            $upload_path = 'public/media/brand/';
-            $image_url = $upload_path . $image_full_name;
-            $success = $data['brand_img']->move($upload_path, $image_full_name);
             DB::table('brand_names')->where('id', $id)->update([
-                'brand_name' => $data['brand_name'],
-                'brand_img' => $image_url
+                'brand_name' => $data['brand_name']
             ]);
-            return back()->with('success', 'Product Brand Updated Successfully!');
-        }
-        DB::table('brand_names')->where('id', $id)->update([
-            'brand_name' => $data['brand_name']
-        ]);
-        return back()->with('success', 'Product Brand Updated Successfully!');
+            return redirect()->route('admin.product.brand.index')->with('success', 'Product Brand Updated Successfully!');
+        });
     }
 
 
     public function destroy(string $id)
     {
-        $data = DB::table('brand_names')->where('id', $id)->first();
-        $image = $data->brand_img;
-        unlink($image);
-        $brand = DB::table('brand_names')->where('id', $id)->delete();
-        return back()->with('success', 'Product Brand Deleted Successfully!');
+        return ErrorHandlerService::handle(function () use ($id) {
+            $data = DB::table('brand_names')->where('id', $id)->first();
+            $image = $data->brand_img;
+            unlink($image);
+            $brand = DB::table('brand_names')->where('id', $id)->delete();
+            return back()->with('success', 'Product Brand Deleted Successfully!');
+        });
     }
 
     public function validateBrandSubmition($request)
