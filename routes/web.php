@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Auth\AuthController;
 use App\Http\Controllers\Backend\Product\ProductBandController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
+use App\Http\Controllers\Backend\Product\ProductCouponController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Frontend\Account\UserDashboardController;
 use App\Http\Controllers\Frontend\Auth\AuthController as FrontAuthController;
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::resource('category', ProductCategoryController::class);
             Route::resource('sub-category', ProductSubCategoryController::class);
             Route::resource('brand', ProductBandController::class);
+            Route::resource('coupon', ProductCouponController::class);
         });
     });
 });

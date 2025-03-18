@@ -10,7 +10,7 @@
 <div class="content-wrapper">
     <div class="card">
         <div class="card-body">
-            <x-card-title title="{{$title}}" button="<a  class='btn btn-info' href='{{route('admin.product.category.create')}}'>+ Add Category</a>" />
+            <x-card-title title="{{ $title }}" button="<a  class='btn btn-info' href='{{route('admin.product.coupon.create')}}'>+ Add Coupon</a>" />
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Discount(%)</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-end">Action</th>
                                 </tr>
@@ -110,11 +111,16 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: '{{ route("admin.product.category.index") }}'
+                url: '{{ route("admin.product.coupon.index") }}'
             },
             columns: [{
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'discount',
+                    name: 'discount',
+                    className: "text-center"
                 },
                 {
                     data: 'created_at',
@@ -129,6 +135,8 @@
                 }
             ]
         });
+
+
 
 
         $('body').on('click', '.action-dropdown-btn', function() {
@@ -151,7 +159,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('click', '.show-alert-delete-box', function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             var form = $(this).closest("form");
             Swal.fire({
                 title: "Are you sure?",
@@ -163,7 +171,7 @@
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit(); 
+                    form.submit();
                 }
             });
         });

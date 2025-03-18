@@ -52,6 +52,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.coupon.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.coupon.index') }}">
+                            Coupon
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="pages/forms/basic_elements.html">Elements</a>
                     </li>
                 </ul>

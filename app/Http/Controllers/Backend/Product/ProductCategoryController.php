@@ -72,6 +72,8 @@ class ProductCategoryController extends Controller
             return redirect()->route('admin.product.category.index')->with('success', "Product Category Created Successfully!");
         });
     }
+
+    
     public function edit(string $id)
     {
         $data['title'] = "Category Edit";
