@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\SiteSetting\NewsletterController;
 use App\Http\Controllers\Frontend\Account\UserDashboardController;
 use App\Http\Controllers\Frontend\Auth\AuthController as FrontAuthController;
+use App\Http\Controllers\Frontend\Newsletter\NewsletterController as FrontNewsletterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
         Route::group(['prefix' => 'site-setting', 'as' => 'site_setting.'] , function () {
             Route::get('newsletter' , [NewsletterController::class , 'newsletter'])->name('newsletter.index');
+            Route::post('/newsletter/delete-multiple', [NewsletterController::class, 'deleteMultiple'])->name('newsletter.delete-multiple');
+
+            Route::post('/newsletter/delete', [NewsletterController::class, 'delete'])->name('newsletter.delete');
+
         });
 
     });
@@ -54,12 +59,10 @@ Route::group(['as' => 'user.'], function () {
     })->name('contact');
 
 
-    Route::post('newsletter/store', function (Request $request) {
 
-        dd($request->all()) ; 
 
-        return view('front.pages.contact.index');
-    })->name('contact');
+
+    Route::post('newsletter/store', [FrontNewsletterController::class,'newsletter'])->name('newsletter.store');
 
 
 

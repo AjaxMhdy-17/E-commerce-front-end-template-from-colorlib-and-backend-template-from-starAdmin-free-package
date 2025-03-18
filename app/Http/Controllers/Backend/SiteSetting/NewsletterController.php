@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\SiteSetting;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Newsletter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,36 +12,46 @@ class NewsletterController extends Controller
 {
     public function newsletter(Request $request)
     {
-        $data['title'] = "Category List";
+        $data['title'] = "Newsletter";
 
         if ($request->ajax()) {
-            $categories = Category::orderBy('created_at', 'desc');
-            return DataTables::eloquent($categories)
+            $newsletters = Newsletter::orderBy('created_at', 'desc');
+            return DataTables::eloquent($newsletters)
                 ->addIndexColumn()
-                ->addColumn('created_at', function ($category) {
-                    return Carbon::parse($category->created_at)->format('Y-m-d');
+                ->addColumn('email', function ($newsletter) {
+                    return $newsletter->email;
                 })
-                ->addColumn('action', function ($category) {
+                ->addColumn('created_at', function ($newsletter) {
+                    return Carbon::parse($newsletter->created_at)->format('Y-m-d');
+                })
+                ->addColumn('action', function ($newsletter) {
                     return '
                         <div class="dropdown text-right">
                             <button type="button" class="btn btn-info action-dropdown-btn">
-                                <i class="ti-time"></i>
+                                <i class="ti-trash delete-btn" data-id="' . $newsletter->id . '"></i>
                             </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="' . route('admin.product.category.edit', ['category' => $category->id]) . '">Edit</a>
-                                <div class="dropdown-divider"></div>
-                                <form class="delete-form" method="POST" action="' . route('admin.product.category.destroy', ['category' => $category->id]) . '">
-                                    ' . csrf_field() . '
-                                    ' . method_field("DELETE") . '
-                                    <button type="submit" class="dropdown-item show-alert-delete-box">Delete</button>
-                                </form>
-                            </div>
                         </div>
                     ';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('admin.pages.product.category.list', $data);
+        return view('admin.pages.site_setting.newsletter.list', $data);
+    }
+
+
+    public function deleteMultiple(Request $request)
+    {
+        $ids = $request->input('ids');
+        Newsletter::whereIn('id', $ids)->delete();
+        return response()->json(['success' => true]);
+    }
+
+
+    public function delete(Request $request)
+    {
+        $id = $request->input('id');
+        Newsletter::find($id)->delete();
+        return response()->json(['success' => true]);
     }
 }
