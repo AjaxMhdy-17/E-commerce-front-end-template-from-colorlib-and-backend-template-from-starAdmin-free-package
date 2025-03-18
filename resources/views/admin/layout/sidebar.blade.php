@@ -66,19 +66,49 @@
         </li>
 
 
-
         <li class="nav-item nav-category">Site Settings</li>
+
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#site_settings" aria-expanded="false" aria-controls="form-elements">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements"
+                aria-expanded="{{ request()->routeIs('admin.site_setting.*') ? 'true' : 'false' }}"
+                aria-controls="form-elements">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Site Settings</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="site_settings">
+
+            <div class="collapse {{ request()->routeIs('admin.site_setting.*') ? 'show' : '' }}" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="">General Setting</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Elements</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.site_setting.newsletter.*') ? 'active' : '' }}"
+                            href="{{ route('admin.site_setting.newsletter.index') }}">
+                            NewsLetter
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.sub-category.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.sub-category.index') }}">
+                            Sub Category
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.brand.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.brand.index') }}">
+                            Brand
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.coupon.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.coupon.index') }}">
+                            Coupon
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/forms/basic_elements.html">Elements</a>
+                    </li>
                 </ul>
             </div>
         </li>
