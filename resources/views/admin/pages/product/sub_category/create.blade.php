@@ -33,7 +33,6 @@
                                     @error('category_name')
                                      <div class="error_message" style="position: fixed;">{{ $message }}</div>
                                     @enderror
-
                                 </div>
                             </div>
                             <div class="col-md-6">

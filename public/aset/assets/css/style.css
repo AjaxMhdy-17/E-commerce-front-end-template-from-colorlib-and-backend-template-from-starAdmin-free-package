@@ -27628,7 +27628,8 @@ dl li {
   pointer-events: none;
   padding-left: 0.125rem;
   z-index: 1;
-  color: #111;
+  /* color: #111; */
+  color : #9F9F9F ; 
   font-size: 0.875rem;
   font-weight: normal;
   -webkit-transition: all 0.28s ease;

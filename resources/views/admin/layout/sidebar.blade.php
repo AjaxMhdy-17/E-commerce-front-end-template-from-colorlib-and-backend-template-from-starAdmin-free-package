@@ -21,16 +21,24 @@
         <li class="nav-item nav-category">Product</li>
 
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements"
+            <a class="nav-link" data-bs-toggle="collapse" href="#product"
                 aria-expanded="{{ request()->routeIs('admin.product.*') ? 'true' : 'false' }}"
-                aria-controls="form-elements">
+                aria-controls="product">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Product</span>
                 <i class="menu-arrow"></i>
             </a>
 
-            <div class="collapse {{ request()->routeIs('admin.product.*') ? 'show' : '' }}" id="form-elements">
+            <div class="collapse {{ request()->routeIs('admin.product.*') ? 'show' : '' }}" id="product">
                 <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.product.list.*') ? 'active' : '' }}"
+                            href="{{ route('admin.product.list.index') }}">
+                            Products
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.product.category.*') ? 'active' : '' }}"
                             href="{{ route('admin.product.category.index') }}">
@@ -57,10 +65,6 @@
                             Coupon
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/forms/basic_elements.html">Elements</a>
-                    </li>
                 </ul>
             </div>
         </li>
@@ -69,15 +73,15 @@
         <li class="nav-item nav-category">Site Settings</li>
 
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements"
+            <a class="nav-link" data-bs-toggle="collapse" href="#site_setting"
                 aria-expanded="{{ request()->routeIs('admin.site_setting.*') ? 'true' : 'false' }}"
-                aria-controls="form-elements">
+                aria-controls="site_setting">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Site Settings</span>
                 <i class="menu-arrow"></i>
             </a>
 
-            <div class="collapse {{ request()->routeIs('admin.site_setting.*') ? 'show' : '' }}" id="form-elements">
+            <div class="collapse {{ request()->routeIs('admin.site_setting.*') ? 'show' : '' }}" id="site_setting">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.site_setting.newsletter.*') ? 'active' : '' }}"

@@ -22,7 +22,7 @@ class NewsletterController extends Controller
                     return $newsletter->email;
                 })
                 ->addColumn('created_at', function ($newsletter) {
-                    return Carbon::parse($newsletter->created_at)->format('Y-m-d');
+                    return Carbon::parse($newsletter->created_at)->diffForHumans();
                 })
                 ->addColumn('action', function ($newsletter) {
                     return '
