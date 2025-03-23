@@ -199,6 +199,7 @@
 
     .form--group label {
         font-size: 0.812rem;
+        margin-bottom : 2px ; 
     }
 
     .select2-selection__choice__remove:hover {
@@ -258,10 +259,6 @@
 
 </style>
 
-
-
-
-
 @endpush
 
 
@@ -312,7 +309,7 @@
 <script>
     $(document).ready(function() {
         $('#summernote').summernote({
-            height: 300,
+            height: 140,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
