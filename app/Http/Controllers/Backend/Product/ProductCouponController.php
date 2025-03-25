@@ -23,7 +23,7 @@ class ProductCouponController extends Controller
                     return $coupon->name;
                 })
                 ->addColumn('discount', function ($coupon) {
-                    return "$coupon->discount%";
+                    return "$coupon->discount";
                 })
                 ->addColumn('created_at', function ($coupon) {
                     return Carbon::parse($coupon->created_at)->format('Y-m-d');

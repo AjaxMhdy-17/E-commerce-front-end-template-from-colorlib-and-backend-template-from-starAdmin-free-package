@@ -13,7 +13,7 @@ use App\Http\Controllers\Frontend\Auth\AuthController as FrontAuthController;
 use App\Http\Controllers\Frontend\Newsletter\NewsletterController as FrontNewsletterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
- 
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
@@ -28,27 +28,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
 
-        Route::group(['prefix' => 'product', 'as' => 'product.'] , function () {
+        Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
             Route::resource('category', ProductCategoryController::class);
             Route::resource('sub-category', ProductSubCategoryController::class);
             Route::resource('brand', ProductBandController::class);
             Route::resource('coupon', ProductCouponController::class);
 
+            Route::get('get/subcategory/{category_id}', [ProductController::class, 'getSubCategory'])->name('get.subcategoty');
             Route::resource('list', ProductController::class);
-
         });
 
 
-        Route::group(['prefix' => 'site-setting', 'as' => 'site_setting.'] , function () {
-            Route::get('newsletter' , [NewsletterController::class , 'newsletter'])->name('newsletter.index');
+        Route::group(['prefix' => 'site-setting', 'as' => 'site_setting.'], function () {
+            Route::get('newsletter', [NewsletterController::class, 'newsletter'])->name('newsletter.index');
             Route::post('/newsletter/delete-multiple', [NewsletterController::class, 'deleteMultiple'])->name('newsletter.delete-multiple');
 
             Route::post('/newsletter/delete', [NewsletterController::class, 'delete'])->name('newsletter.delete');
-
         });
-
     });
 });
+
+
+
 
 
 Route::group(['as' => 'user.'], function () {
@@ -57,7 +58,7 @@ Route::group(['as' => 'user.'], function () {
     Route::get('', function () {
         return view('front.pages.home.home');
     })->name('home');
-    
+
     Route::get('contact', function () {
         return view('front.pages.contact.index');
     })->name('contact');
@@ -66,7 +67,7 @@ Route::group(['as' => 'user.'], function () {
 
 
 
-    Route::post('newsletter/store', [FrontNewsletterController::class,'newsletter'])->name('newsletter.store');
+    Route::post('newsletter/store', [FrontNewsletterController::class, 'newsletter'])->name('newsletter.store');
 
 
 

@@ -111,7 +111,7 @@ class ProductSubCategoryController extends Controller
     {
         return $request->validate([
             'category_id' => 'required',
-            'subcategory_name' => 'required',
+            'subcategory_name' => 'required|unique:sub_categories',
         ]);
     }
 }

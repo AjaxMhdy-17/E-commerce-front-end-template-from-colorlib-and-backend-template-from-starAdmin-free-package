@@ -59,24 +59,16 @@
         const previewImage = document.getElementById('brand_img_preview');
         const defaultImage = document.getElementById('default_img_preview');
         const existingImageInput = document.getElementById('existing_brand_img');
-
-        // Function to check and toggle images
         function toggleImages() {
             if (previewImage.src && previewImage.src !== window.location.origin + "/") {
-                // If brand_img_preview has a valid image
                 previewImage.style.display = 'block';
                 defaultImage.style.display = 'none';
             } else {
-                // If brand_img_preview has no image
                 previewImage.style.display = 'none';
                 defaultImage.style.display = 'block';
             }
         }
-
-        // Initial check on page load
         toggleImages();
-
-        // Handle file input change
         fileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -84,12 +76,11 @@
                 reader.onload = function(e) {
                     previewImage.src = e.target.result;
                     previewContainer.style.display = 'block';
-                    toggleImages(); // Toggle images after setting new image
-                    existingImageInput.value = ''; // Clear the existing image path
+                    toggleImages(); 
+                    existingImageInput.value = ''; 
                 };
                 reader.readAsDataURL(file);
             } else {
-                // If no file is selected, reset the preview image and toggle visibility
                 previewImage.src = '';
                 toggleImages();
             }

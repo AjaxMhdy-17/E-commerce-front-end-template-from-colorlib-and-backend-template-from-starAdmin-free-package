@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         Auth::guard('admin')->login($user);
 
-        return redirect()->route('admin.dashboard')->with('success','Registion in successfully!');
+        return redirect()->route('admin.dashboard')->with('success', 'Registion in successfully!');
     }
 
     public function login()
@@ -46,10 +46,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password'); 
+        $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard')->with('success','Logged in successfully!');
+            return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully!');
         }
         return back()->with('error', 'Invalid Credentials!');
     }
@@ -60,6 +60,6 @@ class AuthController extends Controller
 
         Auth::guard('admin')->logout();
         $request->session()->regenerateToken();
-        return redirect()->route('admin.login')->with('success','Admin Logged out successfully!');
+        return redirect()->route('admin.login')->with('success', 'Admin Logged out successfully!');
     }
 }

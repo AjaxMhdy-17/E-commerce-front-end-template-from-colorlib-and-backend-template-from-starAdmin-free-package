@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string("image_one")->nullable();
             $table->string("image_two")->nullable();
             $table->string("image_three")->nullable();
-            $table->integer("status")->nullable();
+            $table->integer("status")->default('1');
             $table->timestamps();
         });
     }
