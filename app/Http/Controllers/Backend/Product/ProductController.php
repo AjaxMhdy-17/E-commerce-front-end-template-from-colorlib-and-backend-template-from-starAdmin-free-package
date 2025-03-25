@@ -43,16 +43,28 @@ class ProductController extends Controller
                 ->addColumn('selling_price', function ($product) {
                     return $product->selling_price;
                 })
-                ->addColumn('created_at', function ($product) { // Changed $category to $product
+                ->addColumn('status', function ($product) {
+                    return $product->status == 1
+                        ? '<div class="badge badge-success">Active</div>'
+                        : '<div class="badge badge-warning">InActive</div>';
+                })
+                ->addColumn('created_at', function ($product) {
                     return Carbon::parse($product->created_at)->format('Y-m-d');
                 })
-                ->addColumn('action', function ($product) { // Changed $category to $product
+                ->addColumn('action', function ($product) {
                     return '
                         <div class="dropdown text-right">
                             <button type="button" class="btn btn-info action-dropdown-btn">
                                 <i class="ti-time"></i>
                             </button>
                             <div class="dropdown-menu">
+                                <form class="status-form" method="POST" action="' . route('admin.product.product.status', ['product_id' => $product->id]) . '">
+                                    ' . csrf_field() . '
+                                    ' . ($product->status == 1
+                        ? '<button type="submit" class="dropdown-item">Set Inactive</button>'
+                        : '<button type="submit" class="dropdown-item">Set Active</button>') . '
+                                </form>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="' . route('admin.product.list.edit', ['list' => $product->id]) . '">Edit</a>
                                 <div class="dropdown-divider"></div>
                                 <form class="delete-form" method="POST" action="' . route('admin.product.list.destroy', ['list' => $product->id]) . '">
@@ -64,7 +76,7 @@ class ProductController extends Controller
                         </div>
                     ';
                 })
-                ->rawColumns(['image_one','action'])
+                ->rawColumns(['image_one', 'status', 'action'])
                 ->make(true);
         }
         return view('admin.pages.product.index.list', $data);
@@ -111,6 +123,9 @@ class ProductController extends Controller
     {
 
         $data['title'] = "Product Edit";
+        $data['categories'] = Category::all();
+        $data['sub_categories'] = SubCategory::all();
+        $data['brands'] = BrandName::all();
         return view('admin.pages.product.index.edit', $data);
     }
 
@@ -173,5 +188,14 @@ class ProductController extends Controller
 
         $subCategories = SubCategory::where('category_id', $category_id)->get();
         return json_encode($subCategories);
+    }
+
+
+    public function changeStatus(Request $request, $product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        $product->status = $product->status == 1 ? 0 : 1;
+        $product->save();
+        return back()->with('success',"Product Status Updated Successfully!") ; 
     }
 }

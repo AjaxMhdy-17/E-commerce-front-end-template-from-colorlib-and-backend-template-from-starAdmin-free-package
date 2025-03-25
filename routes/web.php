@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::resource('coupon', ProductCouponController::class);
 
             Route::get('get/subcategory/{category_id}', [ProductController::class, 'getSubCategory'])->name('get.subcategoty');
+            Route::post('list/product/{product_id}', [ProductController::class, 'changeStatus'])->name('product.status');
             Route::resource('list', ProductController::class);
         });
 

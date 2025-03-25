@@ -22,6 +22,7 @@
                                         <th>Size</th>
                                         <th>Color</th>
                                         <th>Selling Price</th>
+                                        <th>Status</th>
                                         <th class="text-center">Created At</th>
                                         <th class="text-end">Action</th>
                                     </tr>
@@ -133,6 +134,11 @@
                     {
                         data: 'selling_price',
                         name: 'selling_price',
+                        className: "text-center"
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
                         className: "text-center"
                     },
                     {
