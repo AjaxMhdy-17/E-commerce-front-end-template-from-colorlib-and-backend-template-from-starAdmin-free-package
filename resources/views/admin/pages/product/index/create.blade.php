@@ -195,54 +195,64 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-md-4 my-3">
                                     <div class="form__group">
                                         <input type="file" hidden name="image_one" id="image_one" accept="image/*">
                                         <input type="hidden" name="existing_image_one" id="existing_image_one"
                                             value="">
-                                        <label for="image_one" class="custom-file-label">Upload Image One</label>
+                                        <label for="image_one" class="custom-file-label">Upload Image One
+                                            (Required)</label>
                                         <div class="preview-container" id="preview-container-one" style="display: none;">
                                             <img id="image_one_preview" src="" alt="Uploaded Image"
                                                 style="display: block;">
-                                            <img id="default_image_one_preview"
-                                                src="https://tpc.googlesyndication.com/simgad/11292242217618016428"
-                                                alt="Default Image" style="display: none;">
+                                            <img id="default_image_one_preview" src="" alt="Default Image"
+                                                style="display: none;">
                                         </div>
-
                                         <div class="error__message">
                                             @error('image_one')
                                                 {{ $message }}
                                             @enderror
                                         </div>
-
-
                                     </div>
                                 </div>
 
+                                <!-- Image Two (Can be removed) -->
                                 <div class="col-md-4 my-3">
                                     <div class="form__group">
                                         <input type="file" hidden name="image_two" id="image_two" accept="image/*">
                                         <input type="hidden" name="existing_image_two" id="existing_image_two"
                                             value="">
-                                        <label for="image_two" class="custom-file-label">Upload Image Two</label>
+                                        <input type="hidden" name="remove_image_two" id="remove_image_two"
+                                            value="0">
+                                        <label for="image_two" class="custom-file-label">Upload Image Two
+                                            (Optional)</label>
                                         <div class="preview-container" id="preview-container-two" style="display: none;">
                                             <img id="image_two_preview" src="" alt="Uploaded Image"
                                                 style="display: block;">
                                             <img id="default_image_two_preview"
                                                 src="https://tpc.googlesyndication.com/simgad/11292242217618016428"
                                                 alt="Default Image" style="display: none;">
+                                            <!-- Remove button will be added dynamically by JavaScript -->
+                                        </div>
+                                        <div class="error__message">
+                                            @error('image_two')
+                                                {{ $message }}
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Image Three (Can be removed) -->
                                 <div class="col-md-4 my-3">
                                     <div class="form__group">
                                         <input type="file" hidden name="image_three" id="image_three"
                                             accept="image/*">
                                         <input type="hidden" name="existing_image_three" id="existing_image_three"
                                             value="">
-                                        <label for="image_three" class="custom-file-label">Upload Image Three</label>
+                                        <input type="hidden" name="remove_image_three" id="remove_image_three"
+                                            value="0">
+                                        <label for="image_three" class="custom-file-label">Upload Image Three
+                                            (Optional)</label>
                                         <div class="preview-container" id="preview-container-three"
                                             style="display: none;">
                                             <img id="image_three_preview" src="" alt="Uploaded Image"
@@ -250,6 +260,12 @@
                                             <img id="default_image_three_preview"
                                                 src="https://tpc.googlesyndication.com/simgad/11292242217618016428"
                                                 alt="Default Image" style="display: none;">
+                                            <!-- Remove button will be added dynamically by JavaScript -->
+                                        </div>
+                                        <div class="error__message">
+                                            @error('image_three')
+                                                {{ $message }}
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -352,6 +368,40 @@
 
 @push('style')
     <style>
+        .remove-image-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .remove-image-btn:hover {
+            background: #c82333;
+        }
+
+        .preview-container {
+            position: relative;
+            margin-top: 10px;
+            height: 150px;
+            width: 150px;
+        }
+
+        .preview-container img {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
         .error__message {
             color: red;
             font-size: 13px;
@@ -536,25 +586,31 @@
             });
         });
 
+
+
         document.addEventListener('DOMContentLoaded', function() {
             function setupImagePreview(fileInputId, previewContainerId, previewImageId, defaultImageId,
-                existingImageInputId) {
+                existingImageInputId, removeImageInputId = null) {
                 const fileInput = document.getElementById(fileInputId);
                 const previewContainer = document.getElementById(previewContainerId);
                 const previewImage = document.getElementById(previewImageId);
                 const defaultImage = document.getElementById(defaultImageId);
                 const existingImageInput = document.getElementById(existingImageInputId);
+                const removeImageInput = removeImageInputId ? document.getElementById(removeImageInputId) : null;
 
-                function toggleImages() {
-                    if (previewImage.src && previewImage.src !== window.location.origin + "/") {
+                function toggleImages(showPreview) {
+                    if (showPreview) {
                         previewImage.style.display = 'block';
                         defaultImage.style.display = 'none';
                     } else {
                         previewImage.style.display = 'none';
-                        defaultImage.style.display = 'block';
+                        defaultImage.style.display = 'none'; // Hide both when removed
                     }
                 }
-                toggleImages();
+
+                // Initial state
+                toggleImages(false);
+
                 fileInput.addEventListener('change', function(event) {
                     const file = event.target.files[0];
                     if (file) {
@@ -562,30 +618,80 @@
                         reader.onload = function(e) {
                             previewImage.src = e.target.result;
                             previewContainer.style.display = 'block';
-                            toggleImages();
+                            toggleImages(true);
                             existingImageInput.value = '';
+
+                            // For image_two and image_three, add remove button
+                            if (removeImageInput) {
+                                removeImageInput.value = '0';
+
+                                if (!previewContainer.querySelector('.remove-image-btn')) {
+                                    const removeBtn = document.createElement('button');
+                                    removeBtn.type = 'button';
+                                    removeBtn.className = 'btn btn-danger btn-sm remove-image-btn';
+                                    removeBtn.textContent = 'Remove';
+                                    removeBtn.dataset.target = fileInputId.replace('image_', '');
+                                    previewContainer.appendChild(removeBtn);
+                                }
+                            }
                         };
                         reader.readAsDataURL(file);
                     } else {
                         previewImage.src = '';
-                        toggleImages();
+                        toggleImages(false);
                     }
                 });
             }
+
+            // Initialize image previews
             setupImagePreview('image_one', 'preview-container-one', 'image_one_preview',
                 'default_image_one_preview', 'existing_image_one');
+
             setupImagePreview('image_two', 'preview-container-two', 'image_two_preview',
-                'default_image_two_preview', 'existing_image_two');
+                'default_image_two_preview', 'existing_image_two', 'remove_image_two');
+
             setupImagePreview('image_three', 'preview-container-three', 'image_three_preview',
-                'default_image_three_preview', 'existing_image_three');
+                'default_image_three_preview', 'existing_image_three', 'remove_image_three');
+
+            // Handle remove button clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-image-btn')) {
+                    e.preventDefault();
+                    const target = e.target.dataset.target;
+                    const previewContainer = document.getElementById(`preview-container-${target}`);
+                    const previewImage = document.getElementById(`image_${target}_preview`);
+                    const defaultImage = document.getElementById(`default_image_${target}_preview`);
+                    const fileInput = document.getElementById(`image_${target}`);
+                    const existingImageInput = document.getElementById(`existing_image_${target}`);
+                    const removeImageInput = document.getElementById(`remove_image_${target}`);
+
+                    // Clear the file input
+                    fileInput.value = '';
+
+                    // Hide both preview and default image
+                    previewImage.src = '';
+                    previewImage.style.display = 'none';
+                    defaultImage.style.display = 'none';
+
+                    // Set remove flag
+                    if (removeImageInput) {
+                        removeImageInput.value = '1';
+                    }
+
+                    // Clear existing image reference
+                    existingImageInput.value = '';
+
+                    // Remove the remove button
+                    e.target.remove();
+                }
+            });
         });
     </script>
 
 
     <script>
         $(document).ready(function() {
-            $('#category_select').change(function() {
-                var category_id = $(this).val();
+            function loadSubcategories(category_id, selectedSubcategoryId = null) {
                 if (category_id) {
                     $.ajax({
                         url: "{{ url('/admin/product/get/subcategory/') }}/" + category_id,
@@ -597,8 +703,10 @@
 
                             $.each(data, function(key, value) {
                                 $('#sub_category_id').append(
-                                    '<option value="' + value.id + '">' + value
-                                    .subcategory_name + '</option>'
+                                    '<option value="' + value.id + '" ' +
+                                    (selectedSubcategoryId && value.id ==
+                                        selectedSubcategoryId ? 'selected' : '') + '>' +
+                                    value.subcategory_name + '</option>'
                                 );
                             });
                         },
@@ -609,9 +717,21 @@
                 } else {
                     $('#sub_category_id').empty().append('<option value="">Select A Sub Category</option>');
                 }
+            }
+
+            // Check on page load if a category is selected
+            var initialCategoryId = $('#category_select').val();
+            var initialSubcategoryId = {{ $product->sub_category_id ?? 'null' }};
+
+            if (initialCategoryId) {
+                loadSubcategories(initialCategoryId, initialSubcategoryId);
+            }
+
+            // Handle category change event
+            $('#category_select').change(function() {
+                var category_id = $(this).val();
+                loadSubcategories(category_id);
             });
-
-
         });
     </script>
 @endpush

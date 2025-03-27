@@ -10,6 +10,7 @@ use App\Models\SubCategory;
 use App\Traits\HandlesImageUploads;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -34,14 +35,17 @@ class ProductController extends Controller
                         ? '<img src="' . asset($product->image_one) . '" alt="Brand Image" style="width : 80px ; height : 60px ; border-radius : 5px; ">'
                         : 'No Image';
                 })
-                ->addColumn('size', function ($product) {
-                    return $product->size;
+                ->addColumn('category', function ($product) {
+                    return $product->category->name;
                 })
-                ->addColumn('color', function ($product) {
-                    return $product->color;
+                ->addColumn('brand', function ($product) {
+                    return $product->brand->brand_name;
                 })
                 ->addColumn('selling_price', function ($product) {
                     return $product->selling_price;
+                })
+                ->addColumn('quantity', function ($product) {
+                    return $product->quantity;
                 })
                 ->addColumn('status', function ($product) {
                     return $product->status == 1
@@ -58,6 +62,8 @@ class ProductController extends Controller
                                 <i class="ti-time"></i>
                             </button>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" href="' . route('admin.product.list.show', ['list' => $product->id]) . '">Details</a>
+                                <div class="dropdown-divider"></div>
                                 <form class="status-form" method="POST" action="' . route('admin.product.product.status', ['product_id' => $product->id]) . '">
                                     ' . csrf_field() . '
                                     ' . ($product->status == 1
@@ -96,9 +102,8 @@ class ProductController extends Controller
     {
         $data = $this->validateRequest($request);
         $data = $this->booleanConvertion($data);
-        unset($data['existing_image_one']);
-        unset($data['existing_image_two']);
-        unset($data['existing_image_three']);
+        $data = $this->unsetExistingImage($data);
+
         if (isset($data['image_one']) && $data['image_one']) {
             $data['image_one'] = $this->uploadImage($data['image_one'], 'public/media/product/', 300, 300);
         }
@@ -115,37 +120,90 @@ class ProductController extends Controller
 
     public function show(string $id)
     {
-        //
+        $data['product'] = Product::with(['category','subCategory','brand'])->findOrFail($id);
+        $data['title'] =  $data['product']->name . " details" ; 
+        return view('admin.pages.product.index.details', $data);
     }
 
 
     public function edit(string $id)
     {
-
         $data['title'] = "Product Edit";
         $data['categories'] = Category::all();
         $data['sub_categories'] = SubCategory::all();
         $data['brands'] = BrandName::all();
+        $data['product'] = Product::findOrFail($id);
+
         return view('admin.pages.product.index.edit', $data);
     }
 
 
     public function update(Request $request, string $id)
     {
-        //
+        $data = $this->validateRequest($request, $id);
+        $data = $this->booleanConvertion($data);
+
+        $product = Product::findOrFail($id);
+        if (isset($data['image_one']) && $data['image_one'] != null) {
+            if ($product->image_one != null) {
+                unlink($product->image_one);
+            }
+            $data['image_one'] = $this->uploadImage($data['image_one'], 'public/media/product/', 300, 300);
+        } else {
+            $data['image_one'] = $data['existing_image_one'];
+        }
+        if (isset($data['image_two']) && $data['image_two'] != null) {
+            if ($product->image_two != null) {
+                unlink($product->image_two);
+            }
+            $data['image_two'] = $this->uploadImage($data['image_two'], 'public/media/product/', 300, 300);
+        } else {
+            $data['image_two'] = $data['existing_image_two'];
+            if ($data['existing_image_two'] == null && $product->image_two != null) {
+                unlink($product->image_two);
+            }
+        }
+        if (isset($data['image_three']) && $data['image_three'] != null) {
+            if ($product->image_three != null) {
+                unlink($product->image_three);
+            }
+            $data['image_three'] = $this->uploadImage($data['image_three'], 'public/media/product/', 300, 300);
+        } else {
+            $data['image_three'] = $data['existing_image_three'];
+            if ($data['existing_image_three'] == null && $product->image_three != null) {
+                unlink($product->image_three);
+            }
+        }
+        $data = $this->unsetExistingImage($data);
+        $product->update($data);
+        return back()->with('success', "Product Updated Successfully!");
     }
 
 
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        if ($product->image_one != null) {
+            unlink($product->image_one);
+        }
+        if ($product->image_two != null) {
+            unlink($product->image_two);
+        }
+        if ($product->image_three != null) {
+            unlink($product->image_three);
+        }
+        $product->delete();
+        return back()->with('success', "Product Delete Successfully!");
     }
 
 
-    public function validateRequest($request)
+    public function validateRequest($request, $id = null)
     {
         return $request->validate([
-            'name' => 'required|unique:products',
+            'name' => [
+                'required',
+                Rule::unique('products')->ignore($id),
+            ],
             'code' => 'required',
             'quantity' => 'required',
             'category_id' => 'required',
@@ -196,6 +254,14 @@ class ProductController extends Controller
         $product = Product::findOrFail($product_id);
         $product->status = $product->status == 1 ? 0 : 1;
         $product->save();
-        return back()->with('success',"Product Status Updated Successfully!") ; 
+        return back()->with('success', "Product Status Updated Successfully!");
+    }
+
+    public function unsetExistingImage($data)
+    {
+        unset($data['existing_image_one']);
+        unset($data['existing_image_two']);
+        unset($data['existing_image_three']);
+        return $data;
     }
 }

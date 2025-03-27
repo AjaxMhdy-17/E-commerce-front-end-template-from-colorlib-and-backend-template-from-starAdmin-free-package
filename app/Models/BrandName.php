@@ -11,4 +11,8 @@ class BrandName extends Model
 
     protected $fillable = ['brand_name' , 'brand_img'] ; 
 
+    public function brand(){
+        return $this->hasOne(Product::class , 'brand_id') ; 
+    }
+
 }

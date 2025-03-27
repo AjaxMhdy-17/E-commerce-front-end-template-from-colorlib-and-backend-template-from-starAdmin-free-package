@@ -19,9 +19,10 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Image</th>
-                                        <th>Size</th>
-                                        <th>Color</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
                                         <th>Selling Price</th>
+                                        <th>Quantity</th>
                                         <th>Status</th>
                                         <th class="text-center">Created At</th>
                                         <th class="text-end">Action</th>
@@ -75,7 +76,7 @@
         }
 
         .dropdown .dropdown-menu {
-            top: 20px;
+            top: -30px;
             right: 30px;
             font-size: 0.812rem;
             box-shadow: 0px 1px 15px 1px rgba(230, 234, 236, 0.35);
@@ -122,13 +123,13 @@
                         className: "text-center"
                     },
                     {
-                        data: 'size',
-                        name: 'size',
+                        data: 'category',
+                        name: 'category',
                         className: "text-center"
                     },
                     {
-                        data: 'color',
-                        name: 'color',
+                        data: 'brand',
+                        name: 'brand',
                         className: "text-center"
                     },
                     {
@@ -137,7 +138,12 @@
                         className: "text-center"
                     },
                     {
-                        data: 'status',
+                        data: 'quantity',
+                        name: 'quantity',
+                        className: "text-center"
+                    },
+                    {
+                        data: 'status', 
                         name: 'status',
                         className: "text-center"
                     },
@@ -180,7 +186,7 @@
                 var form = $(this).closest("form");
                 Swal.fire({
                     title: "Are you sure?",
-                    text: "Do you really want to delete this category?",
+                    text: "Do you really want to delete this Product?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
