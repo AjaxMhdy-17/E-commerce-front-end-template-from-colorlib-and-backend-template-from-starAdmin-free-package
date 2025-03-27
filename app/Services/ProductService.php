@@ -14,11 +14,11 @@ class ProductService
     {
         $products = Product::with(['category', 'brand'])
             ->select([
-                'products.id',  // Always include the primary key
+                'products.id',
                 'products.name',
                 'products.image_one',
-                'products.category_id',  // Required for the category relationship
-                'products.brand_id',    // Required for the brand relationship
+                'products.category_id',
+                'products.brand_id',
                 'products.selling_price',
                 'products.quantity',
                 'products.status',
@@ -32,7 +32,7 @@ class ProductService
             ->addColumn('image_one', fn($product) => $this->getProductImage($product->image_one))
             ->addColumn('category', fn($product) => $product->category->name ?? 'N/A')
             ->addColumn('brand', fn($product) => $product->brand->brand_name ?? 'N/A')
-            ->addColumn('selling_price', fn($product) => number_format($product->selling_price, 2))
+            ->addColumn('selling_price', fn($product) => number_format((float)$product->selling_price, 2))
             ->addColumn('quantity', fn($product) => $product->quantity)
             ->addColumn('status', fn($product) => $this->getStatusBadge($product->status))
             ->addColumn('created_at', fn($product) => $product->created_at->format('Y-m-d'))
@@ -40,7 +40,6 @@ class ProductService
             ->rawColumns(['image_one', 'status', 'action'])
             ->make(true);
     }
-
 
     public function createProduct(array $data)
     {

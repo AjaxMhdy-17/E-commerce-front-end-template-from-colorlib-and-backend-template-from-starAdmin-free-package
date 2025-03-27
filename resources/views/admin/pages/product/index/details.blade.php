@@ -52,9 +52,14 @@
                         <label for="">Product Details</label>
                         <p class="">{!! $product->details !!}</p>
                     </div>
-                    <div class="col-12 my-3">
+                    <div class="col-md-6 my-3">
                         <label for="">Product Video Link</label>
                         <p class="label__bg">{{ $product->video_link }}</p>
+                    </div>
+
+                    <div class="col-md-6 my-3">
+                        <label for="">Product Discount Price</label>
+                        <p class="label__bg">{{ $product->discount_price }}</p>
                     </div>
 
                     <div class="row">

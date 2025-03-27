@@ -48,7 +48,6 @@
 
 @push('style')
     <style>
-
         .dt-length label {
             margin-left: 5px !important;
         }
@@ -160,33 +159,61 @@
                     }
                 ],
                 drawCallback: function(settings) {
-                   
+                    // Initialize dropdowns after each table draw
                     initDropdowns();
                 }
             });
 
             function initDropdowns() {
-                
+                // Remove any existing click handlers to prevent duplication
+                $('.datatable').off('click', '.action-dropdown-btn');
+                $(document).off('click', hideDropdowns);
+                $('.datatable').off('click', '.dropdown-menu');
+
+                // Toggle dropdown when button is clicked
                 $('.datatable').on('click', '.action-dropdown-btn', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    var dropdownMenu = $(this).next('.dropdown-menu');
-                    $('.dropdown-menu').not(dropdownMenu).removeClass('show');
-                    dropdownMenu.toggleClass('show');
-                });
+                    const dropdownMenu = $(this).next('.dropdown-menu');
+                    const isVisible = dropdownMenu.hasClass('show');
 
-            
-                $(document).on('click', function(e) {
-                    if (!$(e.target).closest('.dropdown').length) {
-                        $('.dropdown-menu').removeClass('show');
+                    // Hide all other dropdowns
+                    $('.dropdown-menu').removeClass('show');
+
+                    // Toggle current dropdown if it wasn't visible
+                    if (!isVisible) {
+                        dropdownMenu.addClass('show');
                     }
                 });
 
+                // Hide dropdowns when clicking outside
+                function hideDropdowns(e) {
+                    if (!$(e.target).closest('.dropdown').length) {
+                        $('.dropdown-menu').removeClass('show');
+                    }
+                }
+                $(document).on('click', hideDropdowns);
+
+                // Prevent dropdown from closing when clicking inside it
                 $('.datatable').on('click', '.dropdown-menu', function(e) {
                     e.stopPropagation();
                 });
+
+                // Handle form submissions within dropdowns
+                $('.datatable').on('click', '.dropdown-item', function(e) {
+                    // If it's a submit button, let it submit
+                    if ($(this).is('button[type="submit"]')) {
+                        return true;
+                    }
+                    // Otherwise prevent default for regular links/buttons
+                    if ($(this).attr('href') === '#' || !$(this).attr('href')) {
+                        e.preventDefault();
+                    }
+                });
             }
+
+            // Initialize dropdowns on page load
             initDropdowns();
         });
     </script>

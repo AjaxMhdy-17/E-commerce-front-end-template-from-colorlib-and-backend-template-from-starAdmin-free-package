@@ -182,13 +182,26 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <div class="form__group">
                                         <label for="video_link">Video Link</label>
                                         <input type="text" name='video_link' value="{{ old('video_link') }}"
                                             class="form-control" id="video_link">
                                         <div class="error__message">
                                             @error('video_link')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form__group">
+                                        <label for="discount_price">Discount Price</label>
+                                        <input type="text" name='discount_price' value="{{ old('discount_price') }}"
+                                            class="form-control" id="discount_price">
+                                        <div class="error__message">
+                                            @error('discount_price')
                                                 {{ $message }}
                                             @enderror
                                         </div>

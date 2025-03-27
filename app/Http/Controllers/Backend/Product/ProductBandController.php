@@ -126,7 +126,6 @@ class ProductBandController extends Controller
                     <button type="button" class="btn btn-info action-dropdown-btn dropdown-toggle">
                         <i class="ti-time"></i>
                     </button>
-
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" href="' . route('admin.product.brand.edit', $brand->id) . '">Edit</a>

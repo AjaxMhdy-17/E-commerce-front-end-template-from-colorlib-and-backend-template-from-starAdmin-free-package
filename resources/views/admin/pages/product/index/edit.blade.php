@@ -179,7 +179,7 @@
                                 </div>
 
 
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <div class="form__group">
                                         <label for="video_link">Video Link</label>
                                         <input type="text" name='video_link'
@@ -192,6 +192,22 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form__group">
+                                        <label for="discount_price">Discount Price</label>
+                                        <input type="text" name='discount_price'
+                                            value="{{ old('discount_price', $product->discount_price) }}"
+                                            class="form-control" id="discount_price">
+                                        <div class="error__message">
+                                            @error('discount_price')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <!-- Image One (Cannot be removed) -->
                                 <div class="col-md-4 my-3">
