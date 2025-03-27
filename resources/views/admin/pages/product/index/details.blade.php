@@ -13,48 +13,48 @@
                 <div class="row">
                     <div class="col-md-4 my-3">
                         <label for="">Product Name</label>
-                        <p>{{ $product->name }}</p>
+                        <p class="label__bg">{{ $product->name }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Code</label>
-                        <p>{{ $product->code }}</p>
+                        <p class="label__bg">{{ $product->code }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Quantity</label>
-                        <p>{{ $product->quantity }}</p>
+                        <p class="label__bg">{{ $product->quantity }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Category</label>
-                        <p>{{ $product->category->name }}</p>
+                        <p class="label__bg">{{ $product->category->name }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Sub Category</label>
-                        <p>{{ $product->subCategory->subcategory_name }}</p>
+                        <p class="label__bg">{{ $product->subCategory->subcategory_name }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Brand Name</label>
-                        <p>{{ $product->brand->brand_name }}</p>
+                        <p class="label__bg">{{ $product->brand->brand_name }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Size </label>
-                        <p>{{ $product->size }}</p>
+                        <p class="label__bg">{{ $product->size }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Color</label>
-                        <p>{{ $product->color }}</p>
+                        <p class="label__bg">{{ $product->color }}</p>
                     </div>
                     <div class="col-md-4 my-3">
                         <label for="">Product Selling Price</label>
-                        <p>{{ $product->selling_price }}</p>
+                        <p class="label__bg">{{ $product->selling_price }}</p>
                     </div>
 
                     <div class="col-12 my-3">
                         <label for="">Product Details</label>
-                        <p>{!! $product->details !!}</p>
+                        <p class="">{!! $product->details !!}</p>
                     </div>
                     <div class="col-12 my-3">
                         <label for="">Product Video Link</label>
-                        <p>{{ $product->video_link }}</p>
+                        <p class="label__bg">{{ $product->video_link }}</p>
                     </div>
 
 
@@ -160,3 +160,20 @@
         </div>
     </div>
 @endsection
+
+
+@push('style')
+    <style>
+        .label__bg{
+            background: #f4f5f7 ; 
+            display: block ; 
+            padding: 8px ; 
+            border-radius: 2px ; 
+        }
+
+        .badge-primary{
+            width: 67px ; 
+        }
+
+    </style>
+@endpush

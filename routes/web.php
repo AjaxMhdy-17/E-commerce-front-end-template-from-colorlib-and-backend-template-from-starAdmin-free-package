@@ -50,11 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 });
 
 
-
-
-
 Route::group(['as' => 'user.'], function () {
-
 
     Route::get('', function () {
         return view('front.pages.home.home');
@@ -64,14 +60,7 @@ Route::group(['as' => 'user.'], function () {
         return view('front.pages.contact.index');
     })->name('contact');
 
-
-
-
-
     Route::post('newsletter/store', [FrontNewsletterController::class, 'newsletter'])->name('newsletter.store');
-
-
-
 
     Route::middleware('guest.authentic')->group(function () {
         Route::get('register', [FrontAuthController::class, 'register'])->name('register');
