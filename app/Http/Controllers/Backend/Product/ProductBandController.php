@@ -123,7 +123,7 @@ class ProductBandController extends Controller
                 return '
                 <div class="dropdown text-end">
                    
-                    <button type="button" class="btn btn-info action-dropdown-btn">
+                    <button type="button" class="btn btn-info action-dropdown-btn dropdown-toggle">
                         <i class="ti-time"></i>
                     </button>
 

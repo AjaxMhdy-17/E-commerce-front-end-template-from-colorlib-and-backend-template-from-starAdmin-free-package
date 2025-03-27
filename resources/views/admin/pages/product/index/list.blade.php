@@ -43,13 +43,12 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
 
-
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css">
 @endpush
 
 @push('style')
     <style>
+
         .dt-length label {
             margin-left: 5px !important;
         }
@@ -82,7 +81,7 @@
             box-shadow: 0px 1px 15px 1px rgba(230, 234, 236, 0.35);
         }
 
-        .dropdown.text-right .action-dropdown-btn {
+        .action-dropdown-btn {
             padding: 5px;
         }
 
@@ -90,8 +89,6 @@
             background: #c4c8cb;
             border-radius: 10px;
         }
-
-        /* .dropdown-menu */
     </style>
 @endpush
 
@@ -120,16 +117,18 @@
                     {
                         data: 'image_one',
                         name: 'image_one',
-                        className: "text-center"
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'category',
-                        name: 'category',
+                        name: 'category.name',
                         className: "text-center"
                     },
                     {
                         data: 'brand',
-                        name: 'brand',
+                        name: 'brand.brand_name',
                         className: "text-center"
                     },
                     {
@@ -143,7 +142,7 @@
                         className: "text-center"
                     },
                     {
-                        data: 'status', 
+                        data: 'status',
                         name: 'status',
                         className: "text-center"
                     },
@@ -156,27 +155,42 @@
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        className: "text-end"
                     }
-                ]
-            });
-
-
-            $('body').on('click', '.action-dropdown-btn', function() {
-                const dropdownMenu = $(this).next('.dropdown-menu');
-                $('.dropdown-menu').not(dropdownMenu).removeClass('d-block');
-                dropdownMenu.toggleClass('d-block');
-            });
-
-
-            $(document).on('click', function(event) {
-                if (!$(event.target).closest('.dropdown').length) {
-                    $('.dropdown-menu').removeClass('d-block');
+                ],
+                drawCallback: function(settings) {
+                   
+                    initDropdowns();
                 }
             });
 
+            function initDropdowns() {
+                
+                $('.datatable').on('click', '.action-dropdown-btn', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var dropdownMenu = $(this).next('.dropdown-menu');
+                    $('.dropdown-menu').not(dropdownMenu).removeClass('show');
+                    dropdownMenu.toggleClass('show');
+                });
+
+            
+                $(document).on('click', function(e) {
+                    if (!$(e.target).closest('.dropdown').length) {
+                        $('.dropdown-menu').removeClass('show');
+                    }
+                });
+
+                $('.datatable').on('click', '.dropdown-menu', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            initDropdowns();
         });
     </script>
+
 
 
     <script type="text/javascript">

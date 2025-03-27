@@ -26,7 +26,7 @@ class ProductCategoryController extends Controller
                 ->addColumn('action', function ($category) {
                     return '
                         <div class="dropdown text-right">
-                            <button type="button" class="btn btn-info action-dropdown-btn">
+                            <button type="button" class="btn btn-info action-dropdown-btn dropdown-toggle">
                                 <i class="ti-time"></i>
                             </button>
                             <div class="dropdown-menu">
@@ -35,7 +35,7 @@ class ProductCategoryController extends Controller
                                 <form class="delete-form" method="POST" action="' . route('admin.product.category.destroy', ['category' => $category->id]) . '">
                                     ' . csrf_field() . '
                                     ' . method_field("DELETE") . '
-                                    <button type="submit" class="dropdown-item show-alert-delete-box">Delete</button>
+                                    <button type="submit" class="dropdown-item text-danger show-alert-delete-box">Delete</button>
                                 </form>
                             </div>
                         </div>

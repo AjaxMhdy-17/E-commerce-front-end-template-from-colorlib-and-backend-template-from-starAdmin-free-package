@@ -57,37 +57,39 @@
                         <p class="label__bg">{{ $product->video_link }}</p>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-4 my-3">
+                            <label for="">Product Image One</label>
+                            <p style="height: 120px ; width : 180px ;margin:15px 0;">
+                                <img style="width: 100% ; height : 100%"
+                                    src="{{ isset($product->image_one) ? asset($product->image_one) : '' }}"
+                                    alt="image_one">
+                            </p>
+                        </div>
 
-                    <div class="col-md-4 my-3">
-                        <label for="">Product Image One</label>
-                        <p style="height: 120px ; width : 180px ;margin:15px 0;">
-                            <img style="width: 100% ; height : 100%"
-                                src="{{ isset($product->image_one) ? asset($product->image_one) : '' }}" alt="image_one">
-                        </p>
+                        @if (isset($product->image_two))
+                            <div class="col-md-4 my-3">
+                                <label for="">Product Image Two</label>
+                                <p style="height: 120px ; width : 180px ;margin:15px 0;">
+                                    <img style="width: 100% ; height : 100%"
+                                        src="{{ isset($product->image_two) ? asset($product->image_two) : '' }}"
+                                        alt="image_two">
+                                </p>
+                            </div>
+                        @endif
+
+
+                        @if (isset($product->image_three))
+                            <div class="col-md-4 my-3">
+                                <label for="">Product Image Three</label>
+                                <p style="height: 120px ; width : 180px ;margin:15px 0;">
+                                    <img style="width: 100% ; height : 100%"
+                                        src="{{ isset($product->image_three) ? asset($product->image_three) : '' }}"
+                                        alt="image_three">
+                                </p>
+                            </div>
+                        @endif
                     </div>
-
-                    @if (isset($product->image_two))
-                        <div class="col-md-4 my-3">
-                            <label for="">Product Image Two</label>
-                            <p style="height: 120px ; width : 180px ;margin:15px 0;">
-                                <img style="width: 100% ; height : 100%"
-                                    src="{{ isset($product->image_two) ? asset($product->image_two) : '' }}"
-                                    alt="image_two">
-                            </p>
-                        </div>
-                    @endif
-
-
-                    @if (isset($product->image_three))
-                        <div class="col-md-4 my-3">
-                            <label for="">Product Image Three</label>
-                            <p style="height: 120px ; width : 180px ;margin:15px 0;">
-                                <img style="width: 100% ; height : 100%"
-                                    src="{{ isset($product->image_three) ? asset($product->image_three) : '' }}"
-                                    alt="image_three">
-                            </p>
-                        </div>
-                    @endif
 
                     <div class="col-md-4 my-3">
                         <div class="d-flex gap-3">
@@ -164,16 +166,15 @@
 
 @push('style')
     <style>
-        .label__bg{
-            background: #f4f5f7 ; 
-            display: block ; 
-            padding: 8px ; 
-            border-radius: 2px ; 
+        .label__bg {
+            background: #f4f5f7;
+            display: block;
+            padding: 8px;
+            border-radius: 2px;
         }
 
-        .badge-primary{
-            width: 67px ; 
+        .badge-primary {
+            width: 67px;
         }
-
     </style>
 @endpush
