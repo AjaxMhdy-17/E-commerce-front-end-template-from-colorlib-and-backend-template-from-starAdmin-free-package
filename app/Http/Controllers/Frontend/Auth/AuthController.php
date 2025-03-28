@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,10 @@ class AuthController extends Controller
 {
     public function register()
     {
-        return view('front.pages.auth.register');
+
+        $data['categories'] = Category::all() ; 
+
+        return view('front.pages.auth.register',$data);
     }
     public function registerStore(Request $request)
     {
@@ -37,7 +41,9 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('front.pages.auth.login');
+
+        $data['categories'] = Category::all() ; 
+        return view('front.pages.auth.login',$data);
     }
     public function loginStore(Request $request)
     {

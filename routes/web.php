@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\SiteSetting\NewsletterController;
 use App\Http\Controllers\Frontend\Account\UserDashboardController;
 use App\Http\Controllers\Frontend\Auth\AuthController as FrontAuthController;
+use App\Http\Controllers\Frontend\Home\HomeController;
 use App\Http\Controllers\Frontend\Newsletter\NewsletterController as FrontNewsletterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,9 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 Route::group(['as' => 'user.'], function () {
 
-    Route::get('', function () {
-        return view('front.pages.home.home');
-    })->name('home');
+    Route::get('', [HomeController::class , 'home'])->name('home');
 
     Route::get('contact', function () {
         return view('front.pages.contact.index');

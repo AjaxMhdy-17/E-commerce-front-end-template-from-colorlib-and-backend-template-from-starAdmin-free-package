@@ -1615,8 +1615,8 @@ select option
 .product_panel
 {
 	display: none;
-	margin-left: -60px;
-	margin-right: -60px;
+	/* margin-left: -60px;
+	margin-right: -60px; */
 }
 .product_panel.active
 {
@@ -1669,7 +1669,7 @@ select option
 {
 	display: block;
 	position: relative;
-	max-width: 100%;
+	max-width: 75%;
 }
 .product_content
 {
